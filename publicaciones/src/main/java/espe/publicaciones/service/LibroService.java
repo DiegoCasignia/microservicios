@@ -21,6 +21,9 @@ public class LibroService {
     @Autowired
     private AutorRepository autorRepository;
 
+    @Autowired
+    private NotificacionProducer producer;
+
     public ResponseDto crearLibro(LibroDto dto) {
         Autor autor = autorRepository.findById(dto.getIdAutor())
                 .orElseThrow(() -> new RuntimeException("No existe el autor con id: " + dto.getIdAutor()));
@@ -34,6 +37,9 @@ public class LibroService {
         libro.setGenero(dto.getGenero());
         libro.setNumeroPaginas(dto.getNumeroPaginas());
         libro.setAutor(autor);
+
+        Libro saved = libroRepository.save(libro);
+        producer.enviarNotificacion("Libro: " + saved.getTitulo() + "ha sido creado", "Libro");
 
         return new ResponseDto("Libro registrado exitosamente", libroRepository.save(libro));
     }

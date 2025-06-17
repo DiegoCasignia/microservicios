@@ -19,7 +19,10 @@ public class NotificacionProducer {
         try {
             NotificacionDto notificacionDto = new NotificacionDto(mensaje, tipo);
             String json = objectMapper.writeValueAsString(notificacionDto);
+
             rabbitTemplate.convertAndSend("notificaciones.cola", json);
+            rabbitTemplate.convertAndSend("catalogo.cola", json);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -12,13 +12,13 @@ class PublicacionUser(HttpUser):
 
         payload = {
             "titulo": f"Libro Aleatorio {random.randint(1000, 9999)}",
-            "añoPublicacion": 2023,
+            "anioPublicacion": 2023,
             "editorial": "Editorial Ejemplo",
             "isbn": f"ISBN{random.randint(1000000000000, 9999999999999)}",
             "resumen": "Resumen del libro de prueba.",
             "genero": "Ciencia Ficción",
             "numeroPaginas": 300,
-            "autorId": autor_id
+            "idAutor": autor_id
         }
 
         self.client.post("/libros", json=payload)
